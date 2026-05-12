@@ -69,8 +69,7 @@ function DashboardPage({ file, setFile, setPage }: Props) {
         <span>.pdf, .docx, .txt (max 20 MB)</span>
 
         {file && <p>Geselecteerd: {file.name}</p>}
-
-        {/* 🔴 ERROR MESSAGE */}
+        
         {fileError && (
           <p className="upload-error">
             {fileError}
