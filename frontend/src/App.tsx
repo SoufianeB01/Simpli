@@ -6,6 +6,7 @@ import SidebarLeft from "./components/layout/SidebarLeft";
 import DashboardPage from "./components/pages/DashboardPage";
 import DocumentsPage from "./components/pages/DocumentsPage";
 import ProcessingPage from "./components/pages/ProcessingPage";
+import ResultPage from "./components/pages/ResultPage";
 
 import avatar from "./assets/avatar-emma.png";
 
@@ -38,14 +39,17 @@ function App() {
       case "documents":
         return <DocumentsPage setPage={setPage} />;
 
-      case "processing":
-        return <ProcessingPage />;
-
       case "feedback":
         return <div>Feedback pagina</div>;
 
       case "error":
         return <div>Er is iets misgegaan</div>;
+
+      case "processing":
+        return <ProcessingPage setPage={setPage} />;
+
+      case "result":
+        return <ResultPage />;
 
       default:
         return (

@@ -33,8 +33,8 @@ function SidebarLeft({
   const navItems = [
     { label: "Dashboard", icon: <DashboardIcon />, page: "dashboard" },
     { label: "Mijn documenten", icon: <DescriptionIcon />, page: "documents" },
-    { label: "Geschiedenis", icon: <HistoryIcon />, page: "documents" },
-    { label: "Statistieken", icon: <BarChartIcon />, page: "documents" },
+    { label: "Geschiedenis", icon: <HistoryIcon />, page: "history" },
+    { label: "Statistieken", icon: <BarChartIcon />, page: "statistics" },
   ];
 
   return (
@@ -64,7 +64,7 @@ function SidebarLeft({
         {settingsOpen && (
           <div className="settings-menu">
             <div className="settings-row">
-              Dark mode
+              {darkMode ? "Dark mode" : "Light mode"}
               <Switch
                 checked={darkMode}
                 onChange={(e) => setDarkMode(e.target.checked)}
