@@ -2,28 +2,73 @@ import { useState } from "react";
 import "./App.css";
 
 import SidebarLeft from "./components/layout/SidebarLeft";
-import SidebarRight from "./components/layout/SidebarRight";
 
-import WelcomePage from "./components/pages/WelcomePage";
-import UploadPage from "./components/pages/UploadPage";
-import ResultPage from "./components/pages/ResultPage";
+import DashboardPage from "./components/pages/DashboardPage";
+import DocumentsPage from "./components/pages/DocumentsPage";
+import ProcessingPage from "./components/pages/ProcessingPage";
 
-import type { Page } from "./types";
+import avatar from "./assets/avatar-emma.png";
+
+import type { Page, UserProfile } from "./types";
 
 function App() {
-  const [page, setPage] = useState<Page>("welcome");
+  const [page, setPage] = useState<Page>("dashboard");
+
+  const [file, setFile] = useState<File | null>(null);
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  const user: UserProfile = {
+    avatar,
+    name: "Emma de Vries",
+    organization: "Gemeente Rotterdam",
+  };
+
+  const renderPage = () => {
+    switch (page) {
+      case "dashboard":
+        return (
+          <DashboardPage
+            file={file}
+            setFile={setFile}
+            setPage={setPage}
+          />
+        );
+
+      case "documents":
+        return <DocumentsPage setPage={setPage} />;
+
+      case "processing":
+        return <ProcessingPage />;
+
+      case "feedback":
+        return <div>Feedback pagina</div>;
+
+      case "error":
+        return <div>Er is iets misgegaan</div>;
+
+      default:
+        return (
+          <DashboardPage
+            file={file}
+            setFile={setFile}
+            setPage={setPage}
+          />
+        );
+    }
+  };
 
   return (
-    <div className="app">
-      <SidebarLeft setPage={setPage} />
+    <div className={darkMode ? "app dark" : "app"}>
+      <SidebarLeft
+        page={page}
+        setPage={setPage}
+        user={user}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
 
-      <main className="main">
-        {page === "welcome" && <WelcomePage setPage={setPage} />}
-        {page === "upload" && <UploadPage setPage={setPage} />}
-        {page === "result" && <ResultPage />}
-      </main>
-
-      <SidebarRight />
+      <main className="main-content">{renderPage()}</main>
     </div>
   );
 }
