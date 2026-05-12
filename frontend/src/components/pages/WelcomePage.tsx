@@ -1,4 +1,4 @@
-import type { Page } from '../../App'
+import { type Page } from "../../types";
 
 type Props = {
   setPage: (page: Page) => void;
@@ -21,7 +21,7 @@ function WelcomePage({ setPage }: Props) {
       <h1 className="page-title">Welkom bij Simpli</h1>
 
       <p className="subtitle">
-        Simpli maakt complexe teksten begrijpelijker door vaste richtlijnen toe
+        Simpli maakt ingewikkelde teksten begrijpelijker door vaste richtlijnen toe
         te passen die zorgen voor heldere en toegankelijke communicatie.
       </p>
 

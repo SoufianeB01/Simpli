@@ -1,7 +1,7 @@
 function SidebarRight() {
   return (
     <aside className="sidebar-right">
-      <h2>Menselijke controle</h2>
+      <h2>Input</h2>
 
       <div className="toggle-group">
         <h4>Tekstlengte</h4>

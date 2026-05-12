@@ -1,30 +1,54 @@
-import type { Page } from '../../App'
+import { useState } from "react";
+import type { Page } from "../../types";
 
 type Props = {
   setPage: (page: Page) => void;
 };
 
 function UploadPage({ setPage }: Props) {
+  const [fileName, setFileName] = useState<string | null>(null);
+
   return (
-    <div>
+    <div className="upload-page">
+
       <h1 className="page-title">Upload document</h1>
 
       <p className="subtitle">
-        Upload een document om het automatisch te versimpelen.
+        Upload een document dat je wilt laten versimpelen.
       </p>
 
-      <div className="fake-output">
-        Sleep bestand hierheen of selecteer document
-      </div>
+      {/* SIMPLE UPLOAD */}
+      <div
+        style={{
+          border: "1px dashed #999",
+          padding: "40px",
+          borderRadius: "12px",
+          textAlign: "center",
+          marginTop: "20px",
+          background: "#f5f5f5"
+        }}
+      >
+        <input
+          type="file"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) setFileName(file.name);
+          }}
+        />
 
-      <br />
+        <p style={{ marginTop: "10px" }}>
+          {fileName ? `Geselecteerd: ${fileName}` : "Sleep of kies een bestand"}
+        </p>
+      </div>
 
       <button
         className="primary-btn"
+        style={{ marginTop: "20px" }}
         onClick={() => setPage("result")}
       >
-        Doorgaan
+        Versimpel document
       </button>
+
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import { Page } from "../../App";
+import  { type Page } from "../../types";
+import logo from "../../assets/simplilogonew.png";
 
 type Props = {
   setPage: (page: Page) => void;
@@ -7,7 +8,7 @@ type Props = {
 function SidebarLeft({ setPage }: Props) {
   return (
     <aside className="sidebar-left">
-      <div className="logo">Simpli</div>
+      <img src={logo} alt="Simpli logo" className="logo" />
 
       <div className="menu">
         <button onClick={() => setPage("welcome")}>Home</button>
