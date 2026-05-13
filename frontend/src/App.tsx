@@ -5,7 +5,10 @@ import SidebarLeft from "./components/layout/SidebarLeft";
 
 import DashboardPage from "./components/pages/DashboardPage";
 import DocumentsPage from "./components/pages/DocumentsPage";
+import HistoryPage from "./components/pages/HistoryPage";
+import StatisticsPage from "./components/pages/StatisticsPage";
 import ProcessingPage from "./components/pages/ProcessingPage";
+import ResultPage from "./components/pages/ResultPage";
 
 import avatar from "./assets/avatar-emma.png";
 
@@ -13,9 +16,7 @@ import type { Page, UserProfile } from "./types";
 
 function App() {
   const [page, setPage] = useState<Page>("dashboard");
-
   const [file, setFile] = useState<File | null>(null);
-
   const [darkMode, setDarkMode] = useState(false);
 
   const user: UserProfile = {
@@ -38,8 +39,17 @@ function App() {
       case "documents":
         return <DocumentsPage setPage={setPage} />;
 
+      case "history":
+        return <HistoryPage setPage={setPage} />;
+
+      case "statistics":
+        return <StatisticsPage setPage={setPage} />;
+
       case "processing":
-        return <ProcessingPage />;
+        return <ProcessingPage setPage={setPage} />;
+
+      case "result":
+        return <ResultPage />;
 
       case "feedback":
         return <div>Feedback pagina</div>;
@@ -68,7 +78,9 @@ function App() {
         setDarkMode={setDarkMode}
       />
 
-      <main className="main-content">{renderPage()}</main>
+      <main className="main-content">
+        {renderPage()}
+      </main>
     </div>
   );
 }

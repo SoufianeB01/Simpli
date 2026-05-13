@@ -4,13 +4,13 @@ type Props = {
   setPage: (page: Page) => void;
 };
 
-function DocumentsPage({ setPage }: Props) {
+function HistoryPage({ setPage }: Props) {
   return (
     <div>
       <button onClick={() => setPage("dashboard")}>← Terug</button>
-      <h1>Dit is de documenten pagina</h1>
+      <h1>Dit is de geschiedenis pagina</h1>
     </div>
   );
 }
 
-export default DocumentsPage;
+export default HistoryPage;

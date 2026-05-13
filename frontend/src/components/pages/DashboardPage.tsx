@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import UploadIcon from "@mui/icons-material/Backup";
 import LockIcon from "@mui/icons-material/Lock";
 import TranslateIcon from "@mui/icons-material/Translate";
@@ -12,6 +14,8 @@ type Props = {
 };
 
 function DashboardPage({ file, setFile, setPage }: Props) {
+  const [fileError, setFileError] = useState<string | null>(null);
+
   const validateFile = (file: File) => {
     const allowed = [
       "application/pdf",
@@ -22,13 +26,16 @@ function DashboardPage({ file, setFile, setPage }: Props) {
     const maxSize = 20 * 1024 * 1024;
 
     if (!allowed.includes(file.type)) {
+      setFileError("Formaat wordt niet ondersteund (.pdf, .docx, .txt)");
       return false;
     }
 
     if (file.size > maxSize) {
+      setFileError("Bestand is te groot (max 20 MB)");
       return false;
     }
 
+    setFileError(null);
     return true;
   };
 
@@ -62,6 +69,12 @@ function DashboardPage({ file, setFile, setPage }: Props) {
         <span>.pdf, .docx, .txt (max 20 MB)</span>
 
         {file && <p>Geselecteerd: {file.name}</p>}
+        
+        {fileError && (
+          <p className="upload-error">
+            {fileError}
+          </p>
+        )}
 
         <div className="upload-info">
           <div>

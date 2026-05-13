@@ -203,3 +203,150 @@ nav {
   justify-content: space-between;
   align-items: center;
 }
+
+
+/* Processing page */
+
+.processing-page {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px;
+}
+
+.processing-left {
+  flex: 1;
+  text-align: center;
+}
+
+.processing-left h1 {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.processing-left p {
+  color: #a2a8b9;
+  margin-bottom: 48px;
+  font-size: 18px;
+}
+
+.progress-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.progress-text {
+  margin-top: 28px;
+  font-size: 48px;
+  font-weight: 700;
+  color: #1f68fb;
+}
+
+.processing-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-left: 80px;
+}
+
+.processing-step {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 18px;
+  color: #344054;
+}
+
+.step-icon {
+  color: #98a2b3;
+}
+
+.step-loader {
+  margin-left: auto !important;
+  color: #98a2b3 !important;
+}
+
+.step-check {
+  margin-left: auto;
+  color: #1f68fb;
+}
+
+/* ResultPage */
+.result-page {
+  width: 100%;
+  padding: 48px;
+}
+
+.result-page h1 {
+  font-size: 42px;
+  margin-bottom: 36px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  margin-bottom: 42px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #eef1f6;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.stat-card span {
+  color: #98a2b3;
+  font-size: 14px;
+}
+
+.stat-values {
+  margin-top: 14px;
+}
+
+.before {
+  color: #d92d20;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.after {
+  color: #12b76a;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.text-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.text-card {
+  background: white;
+  border: 1px solid #eef1f6;
+  border-radius: 18px;
+  padding: 28px;
+  height: 620px;
+  overflow-y: auto;
+}
+
+.text-card h2 {
+  margin-bottom: 20px;
+}
+
+.text-card pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  line-height: 1.7;
+  color: #344054;
+}
+
+.text-card.simplified {
+  border-color: #d1fadf;
+}

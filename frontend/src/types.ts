@@ -1,6 +1,8 @@
 export type Page =
   | "dashboard"
   | "documents"
+  | "history"
+  | "statistics"
   | "processing"
   | "result"
   | "feedback"
