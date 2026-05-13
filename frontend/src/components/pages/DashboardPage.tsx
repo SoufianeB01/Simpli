@@ -5,6 +5,8 @@ import LockIcon from "@mui/icons-material/Lock";
 import TranslateIcon from "@mui/icons-material/Translate";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { simplifyDocument } from "../../services/documentApi";
+
 import type { Page } from "../../types";
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
 
 function DashboardPage({ file, setFile, setPage }: Props) {
   const [fileError, setFileError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const validateFile = (file: File) => {
     const allowed = [
@@ -45,10 +48,27 @@ function DashboardPage({ file, setFile, setPage }: Props) {
 
     if (validateFile(f)) {
       setFile(f);
+    } else {
+      setFile(null);
     }
   };
 
-  const canProceed = file !== null;
+  const onSimplify = async () => {
+    if (!file || loading) return;
+
+    setLoading(true);
+
+    try {
+      await simplifyDocument(file);
+      setPage("processing");
+    } catch {
+      setFileError("Backend of Python API niet bereikbaar");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const canProceed = file !== null && !loading;
 
   return (
     <div className="dashboard-page">
@@ -69,7 +89,7 @@ function DashboardPage({ file, setFile, setPage }: Props) {
         <span>.pdf, .docx, .txt (max 20 MB)</span>
 
         {file && <p>Geselecteerd: {file.name}</p>}
-        
+
         {fileError && (
           <p className="upload-error">
             {fileError}
@@ -90,12 +110,16 @@ function DashboardPage({ file, setFile, setPage }: Props) {
       </div>
 
       <button
-        className={canProceed ? "make-simple-btn" : "make-simple-btn disabled"}
+        className={
+          canProceed
+            ? "make-simple-btn"
+            : "make-simple-btn disabled"
+        }
         disabled={!canProceed}
-        onClick={() => setPage("processing")}
-        title={!canProceed ? "Upload eerst een document" : ""}
+        onClick={onSimplify}
+        title={!file ? "Upload eerst een document" : ""}
       >
-        Maak simpel
+        {loading ? "Verwerken..." : "Maak simpel"}
         <ArrowForwardIcon />
       </button>
     </div>

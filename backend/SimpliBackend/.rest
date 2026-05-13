@@ -1,0 +1,115 @@
+@baseUrl = http://145.137.69.239:5001
+
+###
+POST http://localhost:5001/api/test/send
+Content-Type: application/json
+
+{
+  "document_text": "Betreft: Paspoort minderjarige – verloopdatum nadert. Geachte mevrouw Van Dijk, Uit onze administratie blijkt dat het paspoort van uw minderjarige kind, Liam van Dijk, verloopt op 12 maart 2026. Om te voorkomen dat uw kind tijdelijk niet over een geldig reisdocument beschikt, verzoeken wij u tijdig een nieuw paspoort aan te vragen. Het aanvragen van een paspoort voor een minderjarige gebeurt uitsluitend op afspraak. U kunt hiervoor terecht op één van onze publiekslocaties in Rotterdam. Bij de aanvraag moeten beide ouders met gezag aanwezig zijn om toestemming te geven. Benodigde documenten: uw identiteitsbewijs, huidige paspoort, uw kind, pasfoto, toestemming beide ouders. Productietijd: vijf werkdagen. Met vriendelijke groet, Gemeente Rotterdam"
+}
+
+###
+POST {{baseUrl}}/api/test/send
+Content-Type: application/json
+
+{
+  "document_text": "Dit is zin 1. Dit is zin 2. Dit is zin 3."
+}
+
+
+### TEST
+GET {{baseUrl}}/api/test
+
+###
+
+### With successful login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "emma@rotterdam.nl",
+  "password": "1234"
+}
+
+###
+
+### with login failed
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "emma@rotterdam.nl",
+  "password": "wrongpassword"
+}
+
+###
+
+### send good feedback
+POST {{baseUrl}}/api/feedback
+Content-Type: application/json
+
+{
+  "rating": "goed",
+  "extraFeedback": "De versimpeling was duidelijk"
+}
+
+###
+
+### send reasonable feedback
+POST {{baseUrl}}/api/feedback
+Content-Type: application/json
+
+{
+  "rating": "redelijk",
+  "extraFeedback": "Kan iets korter"
+}
+
+###
+
+### Send feedback not useful
+POST {{baseUrl}}/api/feedback
+Content-Type: application/json
+
+{
+  "rating": "niet bruikbaar",
+  "extraFeedback": "Nog te ingewikkeld"
+}
+
+###
+
+### document txt
+POST {{baseUrl}}/api/document/simplify
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="example.txt"
+Content-Type: text/plain
+
+< ./example.txt
+--boundary--
+
+###
+
+### document pdf
+POST {{baseUrl}}/api/document/simplify
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="example.pdf"
+Content-Type: application/pdf
+
+< ./example.pdf
+--boundary--
+
+###
+
+### document docx
+POST {{baseUrl}}/api/document/simplify
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="example.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< ./example.docx
+--boundary--
