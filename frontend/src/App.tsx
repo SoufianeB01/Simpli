@@ -15,6 +15,8 @@ import avatar from "./assets/avatar-emma.png";
 import type { Page, UserProfile } from "./types";
 import FeedbackPage from "./components/pages/FeedbackPage";
 
+const USE_REAL_API = false;
+
 function App() {
   const [page, setPage] = useState<Page>("dashboard");
   const [file, setFile] = useState<File | null>(null);
@@ -38,8 +40,13 @@ function App() {
         );
 
       case "documents":
-        return <DocumentsPage setPage={setPage} />;
-
+        return (
+          <DocumentsPage
+            setPage={setPage}
+            useRealApi={USE_REAL_API}
+          />
+        );
+        
       case "history":
         return <HistoryPage setPage={setPage} />;
 
