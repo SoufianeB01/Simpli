@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import UploadIcon from "@mui/icons-material/Backup";
 import LockIcon from "@mui/icons-material/Lock";
 import TranslateIcon from "@mui/icons-material/Translate";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DescriptionIcon from "@mui/icons-material/Description";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { simplifyDocument } from "../../services/documentApi";
 
 import type { Page } from "../../types";
 
@@ -15,6 +19,9 @@ type Props = {
 
 function DashboardPage({ file, setFile, setPage }: Props) {
   const [fileError, setFileError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const validateFile = (file: File) => {
     const allowed = [
@@ -26,12 +33,14 @@ function DashboardPage({ file, setFile, setPage }: Props) {
     const maxSize = 20 * 1024 * 1024;
 
     if (!allowed.includes(file.type)) {
-      setFileError("Formaat wordt niet ondersteund (.pdf, .docx, .txt)");
+      setFileError(
+        "Formaat wordt niet ondersteund (.pdf, .docx, .txt)."
+      );
       return false;
     }
 
     if (file.size > maxSize) {
-      setFileError("Bestand is te groot (max 20 MB)");
+      setFileError("Bestand is te groot (max 20 MB).");
       return false;
     }
 
@@ -45,10 +54,36 @@ function DashboardPage({ file, setFile, setPage }: Props) {
 
     if (validateFile(f)) {
       setFile(f);
+    } else {
+      setFile(null);
     }
   };
 
-  const canProceed = file !== null;
+  const removeFile = () => {
+    setFile(null);
+    setFileError(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const onSimplify = async () => {
+    if (!file || loading) return;
+
+    setLoading(true);
+
+    try {
+      await simplifyDocument(file);
+      setPage("processing");
+    } catch {
+      setFileError("Backend of Python API niet bereikbaar");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const canProceed = file !== null && !loading;
 
   return (
     <div className="dashboard-page">
@@ -60,20 +95,24 @@ function DashboardPage({ file, setFile, setPage }: Props) {
       </p>
 
       <div className="upload-box">
-        <UploadIcon className="upload-icon" />
+        <UploadIcon
+          className="upload-icon clickable"
+          onClick={() => fileInputRef.current?.click()}
+        />
 
         <h3>Sleep uw bestand hierheen of klik om te uploaden</h3>
 
-        <input type="file" onChange={onUpload} />
+        <input
+          ref={fileInputRef}
+          type="file"
+          onChange={onUpload}
+          className="hidden-file-input"
+        />
 
         <span>.pdf, .docx, .txt (max 20 MB)</span>
 
-        {file && <p>Geselecteerd: {file.name}</p>}
-        
         {fileError && (
-          <p className="upload-error">
-            {fileError}
-          </p>
+          <p className="upload-error">{fileError}</p>
         )}
 
         <div className="upload-info">
@@ -89,13 +128,38 @@ function DashboardPage({ file, setFile, setPage }: Props) {
         </div>
       </div>
 
+      {file && (
+        <div className="file-preview">
+          <div className="file-preview-left">
+            <div className="file-icon-bg">
+              <DescriptionIcon />
+            </div>
+
+            <div>
+              <strong>{file.name}</strong>
+              <span>
+                {(file.size / 1024 / 1024).toFixed(2)} MB
+              </span>
+            </div>
+          </div>
+
+          <CloseIcon
+            className="remove-file"
+            onClick={removeFile}
+          />
+        </div>
+      )}
+
       <button
-        className={canProceed ? "make-simple-btn" : "make-simple-btn disabled"}
+        className={
+          canProceed
+            ? "make-simple-btn"
+            : "make-simple-btn disabled"
+        }
         disabled={!canProceed}
-        onClick={() => setPage("processing")}
-        title={!canProceed ? "Upload eerst een document" : ""}
+        onClick={onSimplify}
       >
-        Maak simpel
+        {loading ? "Verwerken..." : "Maak simpel"}
         <ArrowForwardIcon />
       </button>
     </div>

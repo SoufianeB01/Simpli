@@ -13,6 +13,9 @@ import ResultPage from "./components/pages/ResultPage";
 import avatar from "./assets/avatar-emma.png";
 
 import type { Page, UserProfile } from "./types";
+import FeedbackPage from "./components/pages/FeedbackPage";
+
+const USE_REAL_API = false;
 
 function App() {
   const [page, setPage] = useState<Page>("dashboard");
@@ -37,8 +40,13 @@ function App() {
         );
 
       case "documents":
-        return <DocumentsPage setPage={setPage} />;
-
+        return (
+          <DocumentsPage
+            setPage={setPage}
+            useRealApi={USE_REAL_API}
+          />
+        );
+        
       case "history":
         return <HistoryPage setPage={setPage} />;
 
@@ -52,7 +60,7 @@ function App() {
         return <ResultPage />;
 
       case "feedback":
-        return <div>Feedback pagina</div>;
+        return <FeedbackPage />;
 
       case "error":
         return <div>Er is iets misgegaan</div>;

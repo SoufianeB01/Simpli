@@ -1,0 +1,6 @@
+@SimpliBackend_HostAddress = http://localhost:5051
+
+GET {{SimpliBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
