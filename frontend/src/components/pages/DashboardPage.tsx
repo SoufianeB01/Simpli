@@ -29,12 +29,12 @@ function DashboardPage({ file, setFile, setPage }: Props) {
     const maxSize = 20 * 1024 * 1024;
 
     if (!allowed.includes(file.type)) {
-      setFileError("Formaat wordt niet ondersteund (.pdf, .docx, .txt)");
+      setFileError("Formaat wordt niet ondersteund (.pdf, .docx, .txt). Probeer het opnieuw.");
       return false;
     }
 
     if (file.size > maxSize) {
-      setFileError("Bestand is te groot (max 20 MB)");
+      setFileError("Bestand is te groot (max 20 MB). Probeer het opnieuw.");
       return false;
     }
 

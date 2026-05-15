@@ -16,7 +16,7 @@ public class FeedbackController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Submit(Feedback feedback)
+    public IActionResult Send(Feedback feedback)
     {
         _service.Save(feedback);
         return Ok();

@@ -13,6 +13,7 @@ import ResultPage from "./components/pages/ResultPage";
 import avatar from "./assets/avatar-emma.png";
 
 import type { Page, UserProfile } from "./types";
+import FeedbackPage from "./components/pages/FeedbackPage";
 
 function App() {
   const [page, setPage] = useState<Page>("dashboard");
@@ -52,7 +53,7 @@ function App() {
         return <ResultPage />;
 
       case "feedback":
-        return <div>Feedback pagina</div>;
+        return <FeedbackPage />;
 
       case "error":
         return <div>Er is iets misgegaan</div>;
