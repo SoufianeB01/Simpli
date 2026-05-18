@@ -15,15 +15,17 @@ public class DocumentController : ControllerBase
     }
 
     [HttpPost("simplify")]
-    public async Task<IActionResult> Simplify(IFormFile file)
+    public async Task<IActionResult> Simplify(
+        [FromForm] IFormFile file
+    )
     {
-        if (file == null)
-            return BadRequest();
+        if (file == null || file.Length == 0)
+            return BadRequest("Geen bestand ontvangen");
 
         var result = await _service.Simplify(file);
 
         if (result == null)
-            return StatusCode(500);
+            return StatusCode(500, "Python API gaf null terug");
 
         return Ok(result);
     }

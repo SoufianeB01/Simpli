@@ -15,9 +15,17 @@ type Props = {
   file: File | null;
   setFile: (file: File | null) => void;
   setPage: (page: Page) => void;
+  setResultData: (data: any) => void;
+  useRealApi: boolean;
 };
 
-function DashboardPage({ file, setFile, setPage }: Props) {
+function DashboardPage({
+  file,
+  setFile,
+  setPage,
+  setResultData,
+  useRealApi,
+}: Props) {
   const [fileError, setFileError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -74,7 +82,16 @@ function DashboardPage({ file, setFile, setPage }: Props) {
     setLoading(true);
 
     try {
-      await simplifyDocument(file);
+      let result;
+
+      if (useRealApi) {
+        result = await simplifyDocument(file);
+      } else {
+        result = null;
+      }
+
+      setResultData(result);
+
       setPage("processing");
     } catch {
       setFileError("Backend of Python API niet bereikbaar");
