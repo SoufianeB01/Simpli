@@ -1,4 +1,4 @@
-@baseUrl = http://145.137.69.239:5001
+@baseUrl = http://145.137.69.150:5001
 
 ###
 POST http://localhost:5001/api/test/send
@@ -7,7 +7,12 @@ Content-Type: application/json
 {
   "document_text": "Betreft: Paspoort minderjarige – verloopdatum nadert. Geachte mevrouw Van Dijk, Uit onze administratie blijkt dat het paspoort van uw minderjarige kind, Liam van Dijk, verloopt op 12 maart 2026. Om te voorkomen dat uw kind tijdelijk niet over een geldig reisdocument beschikt, verzoeken wij u tijdig een nieuw paspoort aan te vragen. Het aanvragen van een paspoort voor een minderjarige gebeurt uitsluitend op afspraak. U kunt hiervoor terecht op één van onze publiekslocaties in Rotterdam. Bij de aanvraag moeten beide ouders met gezag aanwezig zijn om toestemming te geven. Benodigde documenten: uw identiteitsbewijs, huidige paspoort, uw kind, pasfoto, toestemming beide ouders. Productietijd: vijf werkdagen. Met vriendelijke groet, Gemeente Rotterdam"
 }
+###
 
+POST http://localhost:5001/api/document/simplify
+Content-Type: multipart/form-data
+
+file=@test-files/paspoort.pdf
 ###
 POST {{baseUrl}}/api/test/send
 Content-Type: application/json

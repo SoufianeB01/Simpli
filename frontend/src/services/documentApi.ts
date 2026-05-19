@@ -1,5 +1,8 @@
-export async function simplifyDocument(file: File) {
+export async function simplifyDocument(
+  file: File
+) {
   const formData = new FormData();
+
   formData.append("file", file);
 
   const response = await fetch(
@@ -11,7 +14,8 @@ export async function simplifyDocument(file: File) {
   );
 
   if (!response.ok) {
-    throw new Error("Upload mislukt");
+    const error = await response.text();
+    throw new Error(error);
   }
 
   return response.json();

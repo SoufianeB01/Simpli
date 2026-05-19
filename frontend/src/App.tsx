@@ -9,18 +9,20 @@ import HistoryPage from "./components/pages/HistoryPage";
 import StatisticsPage from "./components/pages/StatisticsPage";
 import ProcessingPage from "./components/pages/ProcessingPage";
 import ResultPage from "./components/pages/ResultPage";
+import FeedbackPage from "./components/pages/FeedbackPage";
 
 import avatar from "./assets/avatar-emma.png";
 
 import type { Page, UserProfile } from "./types";
-import FeedbackPage from "./components/pages/FeedbackPage";
 
-const USE_REAL_API = false;
+export const USE_REAL_API = false;
 
 function App() {
   const [page, setPage] = useState<Page>("dashboard");
   const [file, setFile] = useState<File | null>(null);
   const [darkMode, setDarkMode] = useState(false);
+
+  const [result, setResult] = useState<any>(null);
 
   const user: UserProfile = {
     avatar,
@@ -36,6 +38,8 @@ function App() {
             file={file}
             setFile={setFile}
             setPage={setPage}
+            setResultData={setResult}
+            useRealApi={USE_REAL_API}
           />
         );
 
@@ -46,7 +50,7 @@ function App() {
             useRealApi={USE_REAL_API}
           />
         );
-        
+
       case "history":
         return <HistoryPage setPage={setPage} />;
 
@@ -57,22 +61,13 @@ function App() {
         return <ProcessingPage setPage={setPage} />;
 
       case "result":
-        return <ResultPage />;
+        return <ResultPage resultData={result} />;
 
       case "feedback":
         return <FeedbackPage />;
 
-      case "error":
-        return <div>Er is iets misgegaan</div>;
-
       default:
-        return (
-          <DashboardPage
-            file={file}
-            setFile={setFile}
-            setPage={setPage}
-          />
-        );
+        return <div>Fout</div>;
     }
   };
 
