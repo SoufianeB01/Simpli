@@ -73,8 +73,8 @@ function ProcessingPage({ setPage }: Props) {
             size={180}
             thickness={4}
             sx={{
-              color: "#1f68fb",
               "& .MuiCircularProgress-circle": {
+                stroke: "#1f68fb",
                 strokeLinecap: "round",
               },
             }}

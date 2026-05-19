@@ -1,3 +1,5 @@
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import originalTextFile from "./mock/original.txt?raw";
 import simplifiedTextFile from "./mock/simplified.txt?raw";
 
@@ -11,8 +13,6 @@ function ResultPage({ resultData }: Props) {
     simplifiedText: simplifiedTextFile,
     readabilityBefore: 42,
     readabilityAfter: 88,
-    doumaBefore: 5.8,
-    doumaAfter: 8.9,
     wordsBefore: 198,
     wordsAfter: 92,
     sentencesBefore: 18,
@@ -21,51 +21,95 @@ function ResultPage({ resultData }: Props) {
 
   const isReal = resultData !== null;
 
-  const stats = [
-    {
-      label: "Leesbaarheid",
-      before: isReal
-        ? result.readability_before.douma_score
-        : result.readabilityBefore,
-      after: isReal
-        ? result.readability_after.douma_score
-        : result.readabilityAfter,
-    },
-    {
-      label: "Woorden",
-      before: isReal
-        ? result.readability_before.woorden
-        : result.wordsBefore,
-      after: isReal
-        ? result.readability_after.woorden
-        : result.wordsAfter,
-    },
-    {
-      label: "Zinnen",
-      before: isReal
-        ? result.readability_before.zinnen
-        : result.sentencesBefore,
-      after: isReal
-        ? result.readability_after.zinnen
-        : result.sentencesAfter,
-    },
-  ];
+  const beforeReadability = isReal
+    ? result.readability_before?.douma_score ?? "-"
+    : result.readabilityBefore;
+
+  const afterReadability = isReal
+    ? result.readability_after?.douma_score ?? "-"
+    : result.readabilityAfter;
+
+  const beforeWords = isReal
+    ? result.readability_before?.woorden ?? "-"
+    : result.wordsBefore;
+
+  const afterWords = isReal
+    ? result.readability_after?.woorden ?? "-"
+    : result.wordsAfter;
+
+  const beforeSentences = isReal
+    ? result.readability_before?.zinnen ?? "-"
+    : result.sentencesBefore;
+
+  const afterSentences = isReal
+    ? result.readability_after?.zinnen ?? "-"
+    : result.sentencesAfter;
+
+  const improvement =
+    typeof beforeReadability === "number" &&
+    typeof afterReadability === "number"
+      ? `+${afterReadability - beforeReadability}%`
+      : "-";
 
   return (
     <div className="result-page">
       <h1>Resultaat</h1>
 
       <div className="stats-grid">
-        {stats.map((stat) => (
-          <div className="stat-card" key={stat.label}>
-            <span>{stat.label}</span>
 
-            <div className="stat-values">
-              <div className="before">{stat.before}</div>
-              <div className="after">{stat.after}</div>
-            </div>
+        <div className="stat-card big-stat">
+          <h3>Voor</h3>
+
+          <div className="stat-item">
+            <span>Leesbaarheidsscore</span>
+            <strong className="before">
+              {beforeReadability}%
+            </strong>
           </div>
-        ))}
+
+          <div className="stat-item">
+            <span>Aantal woorden</span>
+            <strong>{beforeWords}</strong>
+          </div>
+
+          <div className="stat-item">
+            <span>Aantal zinnen</span>
+            <strong>{beforeSentences}</strong>
+          </div>
+        </div>
+
+        <div className="stat-arrow">
+          <ArrowForwardIcon />
+        </div>
+
+        <div className="stat-card big-stat">
+          <h3>Na</h3>
+
+          <div className="stat-item">
+            <span>Leesbaarheidsscore</span>
+            <strong className="after">
+              {afterReadability}%
+            </strong>
+          </div>
+
+          <div className="stat-item">
+            <span>Aantal woorden</span>
+            <strong>{afterWords}</strong>
+          </div>
+
+          <div className="stat-item">
+            <span>Aantal zinnen</span>
+            <strong>{afterSentences}</strong>
+          </div>
+        </div>
+
+        <div className="stat-card improvement-card">
+          <h3>Verbetering</h3>
+
+          <strong className="improvement">
+            {improvement}
+          </strong>
+        </div>
       </div>
 
       <div className="text-columns">

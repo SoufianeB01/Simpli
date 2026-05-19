@@ -15,7 +15,7 @@ import avatar from "./assets/avatar-emma.png";
 
 import type { Page, UserProfile } from "./types";
 
-export const USE_REAL_API = true;
+export const USE_REAL_API = false;
 
 function App() {
   const [page, setPage] = useState<Page>("dashboard");
