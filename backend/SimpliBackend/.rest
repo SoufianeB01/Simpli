@@ -1,4 +1,4 @@
-@baseUrl = http://145.137.69.150:5001
+@baseUrl = http://192.168.1.78:5001
 
 ###
 POST http://localhost:5001/api/test/send
@@ -14,6 +14,8 @@ Content-Type: multipart/form-data
 
 file=@test-files/paspoort.pdf
 ###
+
+
 POST {{baseUrl}}/api/test/send
 Content-Type: application/json
 

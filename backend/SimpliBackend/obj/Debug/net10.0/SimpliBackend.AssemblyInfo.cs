@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SimpliBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+abb3c99b8e75dc0db403fb1fc2ddc9655b8a9f11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85abb92e52ac5a2768b4903bd416ade26c627688")]
 [assembly: System.Reflection.AssemblyProductAttribute("SimpliBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SimpliBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

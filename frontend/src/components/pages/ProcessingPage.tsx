@@ -41,9 +41,9 @@ function ProcessingPage({ setPage }: Props) {
 
         setTimeout(() => {
           setPage("result");
-        }, 3000);
+        }, 2000);
       }
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [setPage]);

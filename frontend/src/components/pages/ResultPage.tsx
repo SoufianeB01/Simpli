@@ -13,20 +13,20 @@ function ResultPage({ resultData }: Props) {
     simplifiedText: simplifiedTextFile,
     readabilityBefore: 42,
     readabilityAfter: 88,
-    wordsBefore: 198,
+    wordsBefore: 110,
     wordsAfter: 92,
-    sentencesBefore: 18,
-    sentencesAfter: 9,
+    sentencesBefore: 10,
+    sentencesAfter: 16,
   };
 
   const isReal = resultData !== null;
 
   const beforeReadability = isReal
-    ? result.readability_before?.douma_score ?? "-"
+    ? result.readability_before?.DoumaScore ?? "-"
     : result.readabilityBefore;
 
   const afterReadability = isReal
-    ? result.readability_after?.douma_score ?? "-"
+    ? result.readability_after?.DoumaScore ?? "-"
     : result.readabilityAfter;
 
   const beforeWords = isReal
